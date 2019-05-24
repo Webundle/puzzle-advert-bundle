@@ -1,0 +1,34 @@
+{
+    "name" : "webundle/puzzle-advert-bundle",
+    "description" : "Manage advertising",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "AGNES Gnagne Cedric",
+        "email" : "cecenho55@gmail.com"
+    }],
+    "keywords" : [
+        "advert bundle"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "php": ">=5.5.9",
+        "puzzle/admin-bundle": "^1.0",
+        "puzzle/media-bundle": "^1.0",
+        "puzzle/user-bundle": "^1.0"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Puzzle\\AdvertBundle" : ""
+        }
+    },
+    "target-dir" : "Puzzle/AdvertBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "1.0.0"
+        }
+    }
+}

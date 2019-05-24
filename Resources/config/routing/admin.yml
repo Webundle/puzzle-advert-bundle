@@ -1,0 +1,75 @@
+# Category
+puzzle_admin_advert_category_list:
+    path:     /category/list
+    defaults: { _controller: 'AdvertBundle:Admin:listCategories' }
+
+puzzle_admin_advert_category_create:
+    path:     /category/create
+    defaults: { _controller: 'AdvertBundle:Admin:createCategory' }
+
+puzzle_admin_advert_category_show:
+    path:     /category/{id}
+    defaults: { _controller: 'AdvertBundle:Admin:showCategory' }
+
+puzzle_admin_advert_category_update:
+    path:     /category/{id}/update
+    defaults: { _controller: 'AdvertBundle:Admin:updateCategory' }
+    
+puzzle_admin_advert_category_delete:
+    path:     /category/{id}/delete
+    defaults: { _controller: 'AdvertBundle:Admin:deleteCategory' }
+
+# Advertiser
+puzzle_admin_advert_advertiser_list:
+    path:     /advertiser/list
+    defaults: { _controller: 'AdvertBundle:Admin:listAdvertisers' }
+
+puzzle_admin_advert_advertiser_create:
+    path:     /advertiser/create
+    defaults: { _controller: 'AdvertBundle:Admin:createAdvertiser' }
+
+puzzle_admin_advert_advertiser_show:
+    path:     /advertiser/{id}
+    defaults: { _controller: 'AdvertBundle:Admin:showAdvertiser' }
+
+puzzle_admin_advert_advertiser_update:
+    path:     /advertiser/{id}/update
+    defaults: { _controller: 'AdvertBundle:Admin:updateAdvertiser' }
+    
+puzzle_admin_advert_advertiser_delete:
+    path:     /advertiser/{id}/delete
+    defaults: { _controller: 'AdvertBundle:Admin:deleteAdvertiser' }
+
+# Post
+puzzle_admin_advert_post_list:
+    path:     /post/list
+    defaults: { _controller: 'AdvertBundle:Admin:listPosts' }
+
+puzzle_admin_advert_post_create:
+    path:     /post/create
+    defaults: { _controller: 'AdvertBundle:Admin:createPost' }
+
+puzzle_admin_advert_post_show:
+    path:     /post/{id}
+    defaults: { _controller: 'AdvertBundle:Admin:showPost' }
+
+puzzle_admin_advert_post_update:
+    path:     /post/{id}/update
+    defaults: { _controller: 'AdvertBundle:Admin:updatePost' }
+
+puzzle_admin_advert_post_delete:
+    path:     /post/{id}/delete
+    defaults: { _controller: 'AdvertBundle:Admin:deletePost' }
+
+# Postulate
+puzzle_admin_advert_postulate_list:
+    path:     /post/{id}/postulate/list
+    defaults: { _controller: 'AdvertBundle:Admin:listPostulates' }
+
+puzzle_admin_advert_postulate_confirm:
+    path:     /postulate/{id}/confirm
+    defaults: { _controller: 'AdvertBundle:Admin:confirmPostulate' }
+
+puzzle_admin_advert_postulate_delete:
+    path:     /postulate/{id}/delete
+    defaults: { _controller: 'AdvertBundle:Admin:deletePostulate' }
