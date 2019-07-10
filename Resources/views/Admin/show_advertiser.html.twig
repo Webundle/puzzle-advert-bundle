@@ -1,0 +1,94 @@
+{% trans_default_domain 'advert' %}
+
+{% extends 'AdvertBundle:Admin:layout.html.twig' %}
+
+{% block title %} {{ parent() }} - {{ "advert.advertiser.show.title"|trans|capitalize }} {{ advertiser.name }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('puzzle_admin_advert_advertiser_list') }} ">
+       {{ 'advert.advertiser.list.title'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "advert.advertiser.show.title"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+     <div id="page_content_inner">
+        <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+            <div class="uk-width-1-2">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.name'|trans }} : </label>
+                            <span>{{ advertiser.name }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.email'|trans }} : </label>
+                            <span>{{ advertiser.email|default('advert.advertiser.show.undefined'|trans) }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.phone_number'|trans }} : </label>
+                            <span>{{ advertiser.phoneNumber|default('advert.advertiser.show.undefined'|trans) }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.picture'|trans }} : </label>
+                            {% if advertiser.picture is not empty %}
+                                {% set file = puzzle_media_file(advertiser.picture) %}
+                                {% if file is not empty %}
+                                	<a href="{{ url('puzzle_admin_media_file_show', {'id': file.id}) }}" class="show-modal">{{ 'advert.advertiser.show.view'|trans }}</a>
+                            	{% endif %} 
+                            {% else %}
+                            	<span>{{ 'advert.advertiser.show.undefined'|trans }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.created_by'|trans }} : </label>
+                            <span>{{ advertiser.createdBy }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.created_at'|trans }} : </label>
+                            <span>{{ date_time_ago(advertiser.createdAt) }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.updated_by'|trans }} : </label>
+                            <span>{{ advertiser.createdBy }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.advertiser.show.updated_at'|trans }} : </label>
+                            <span>{{ date_time_ago(advertiser.updatedAt) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if advertiser.description is not empty %}
+            <div class="uk-width-1-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div>
+                            <span>{{ advertiser.description|raw }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="uk-text-center uk-margin-top">
+                <a href="{{ url('puzzle_admin_advert_advertiser_update', { 'id': advertiser.id })}}" class="md-btn md-btn-primary" id="{{ advertiser.id }}">
+                    <i class="fa fa-pencil"></i>
+                    {{ "advert.advertiser.show.update"|trans }}
+                </a>
+                <a href="#" class="remove-item md-btn md-btn-danger" data-route="{{ url('puzzle_admin_advert_advertiser_delete', {'id' : advertiser.id}) }}" data-label="{{ advertiser.name }}" data-title="{{ 'advert.advertiser.delete.title' }}" data-text="{{ 'advert.advertiser.delete.description'|trans({'%advertiserName%': advertiser.name}) }}">
+                    <i class="fa fa-trash-o"></i>
+                    {{ "advert.advertiser.show.delete"|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

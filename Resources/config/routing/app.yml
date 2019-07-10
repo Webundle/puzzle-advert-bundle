@@ -4,7 +4,7 @@ app_advert_post_list:
     defaults: { _controller: AdvertBundle:App:listPosts }
 
 app_advert_post_show:
-    path:     /post/{slug}
+    path:     /post/{id}/show
     defaults: { _controller: AdvertBundle:App:showPost }
 
 # Category

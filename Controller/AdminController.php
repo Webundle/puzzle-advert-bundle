@@ -31,7 +31,7 @@ class AdminController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listCategoriesAction(Request $request) {
-        return $this->render("AdminBundle:Advert:list_categories.html.twig", array(
+        return $this->render("AdvertBundle:Admin:list_categories.html.twig", array(
             'categories' => $this->getDoctrine()->getRepository(Category::class)->findBy(['parentNode' => null])
         ));
     }
@@ -44,7 +44,7 @@ class AdminController extends Controller
      */
     public function showCategoryAction(Request $request, Category $category) {
         $rep = $this->getDoctrine()->getRepository(Category::class);
-        return $this->render("AdminBundle:Advert:show_category.html.twig", array(
+        return $this->render("AdvertBundle:Admin:show_category.html.twig", array(
             'category' => $category,
             'childNodes' => $rep->findBy(['parentNode' => $category->getId()])
         ));
@@ -94,7 +94,7 @@ class AdminController extends Controller
             return $this->redirectToRoute('puzzle_admin_advert_category_list');
         }
         
-        return $this->render("AdminBundle:Advert:create_category.html.twig", array(
+        return $this->render("AdvertBundle:Admin:create_category.html.twig", array(
             'form' => $form->createView()
         ));
     }
@@ -138,7 +138,7 @@ class AdminController extends Controller
             return $this->redirectToRoute('puzzle_admin_advert_category_show', ['id' => $category->getId()]);
         }
         
-        return $this->render("AdminBundle:Advert:update_category.html.twig", array(
+        return $this->render("AdvertBundle:Admin:update_category.html.twig", array(
             'category' => $category,
             'form' => $form->createView()
         ));
@@ -180,7 +180,7 @@ class AdminController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAdvertisersAction(Request $request) {
-        return $this->render("AdminBundle:Advert:list_advertisers.html.twig", array(
+        return $this->render("AdvertBundle:Admin:list_advertisers.html.twig", array(
             'advertisers' => $this->getDoctrine()->getRepository(Advertiser::class)->findAll()
         ));
     }
@@ -192,9 +192,7 @@ class AdminController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAdvertiserAction(Request $request, Advertiser $advertiser) {
-        return $this->render("AdminBundle:Advert:show_advertiser.html.twig", array(
-            'advertiser' => $advertiser
-        ));
+        return $this->render("AdvertBundle:Admin:show_advertiser.html.twig", ['advertiser' => $advertiser]);
     }
     
     /***
@@ -232,10 +230,10 @@ class AdminController extends Controller
             $this->addFlash('success', $this->get('translator')->trans('advert.advertiser.create.success', [
                 '%advertiserName%' => $advertiser->getName()
             ], 'advert'));
-            return $this->redirectToRoute('puzzle_admin_advert_advertiser_list');
+            return $this->redirectToRoute('puzzle_admin_advert_advertiser_show', ['id' => $advertiser->getId()]);
         }
         
-        return $this->render("AdminBundle:Advert:create_advertiser.html.twig", array(
+        return $this->render("AdvertBundle:Admin:create_advertiser.html.twig", array(
             'form' => $form->createView()
         ));
     }
@@ -273,10 +271,10 @@ class AdminController extends Controller
             $this->addFlash('success', $this->get('translator')->trans('advert.advertiser.update.success', [
                 '%advertiserName%' => $advertiser->getName()
             ], 'advert'));
-            return $this->redirectToRoute('puzzle_admin_advert_advertiser_list');
+            return $this->redirectToRoute('puzzle_admin_advert_advertiser_show', ['id' => $advertiser->getId()]);
         }
         
-        return $this->render("AdminBundle:Advert:update_advertiser.html.twig", array(
+        return $this->render("AdvertBundle:Admin:update_advertiser.html.twig", array(
             'advertiser' => $advertiser,
             'form' => $form->createView()
         ));
@@ -312,7 +310,7 @@ class AdminController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listPostsAction(Request $request){
-        return $this->render("AdminBundle:Advert:list_posts.html.twig", array(
+        return $this->render("AdvertBundle:Admin:list_posts.html.twig", array(
             'posts' => $this->getDoctrine()->getRepository(Post::class)->findAll()
         ));
     }
@@ -324,7 +322,7 @@ class AdminController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showPostAction(Request $request, Post $post) {
-        return $this->render("AdminBundle:Advert:show_post.html.twig", array(
+        return $this->render("AdvertBundle:Admin:show_post.html.twig", array(
             'post' => $post
         ));
     }
@@ -352,22 +350,6 @@ class AdminController extends Controller
                 $post->setExpiresAt(new \DateTime($data['expiresAt']));
             }
             
-            $now = new \DateTime();
-            $archive = $em->getRepository(Archive::class)->findOneBy([
-                'month' => (int) $now->format("m"),
-                'year' => $now->format("Y")
-            ]);
-            
-            if ($archive === null) {
-                $archive = new Archive();
-                $archive->setMonth((int) $now->format("m"));
-                $archive->setYear($now->format("Y"));
-                
-                $em->persist($archive);
-            }
-            
-            $post->setArchive($archive);
-            
             $em->persist($post);
             $em->flush();
             
@@ -380,10 +362,10 @@ class AdminController extends Controller
             }
             
             $this->addFlash('success', $message);
-            return $this->redirectToRoute('puzzle_admin_advert_post_update', ['id' => $post->getId()]);
+            return $this->redirectToRoute('puzzle_admin_advert_post_show', ['id' => $post->getId()]);
         }
         
-        return $this->render("AdminBundle:Advert:create_post.html.twig", array(
+        return $this->render("AdvertBundle:Admin:create_post.html.twig", array(
             'form' => $form->createView()
         ));
     }
@@ -424,10 +406,10 @@ class AdminController extends Controller
             }
             
             $this->addFlash('success', $message);
-            return $this->redirectToRoute('puzzle_admin_advert_post_update', ['id' => $post->getId()]);
+            return $this->redirectToRoute('puzzle_admin_advert_post_show', ['id' => $post->getId()]);
         }
         
-        return $this->render("AdminBundle:Advert:update_post.html.twig", array(
+        return $this->render("AdvertBundle:Admin:update_post.html.twig", array(
             'post' => $post,
             'form' => $form->createView()
         ));
@@ -463,7 +445,7 @@ class AdminController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listPostulatesAction(Request $request, Post $post) {
-        return $this->render("AdminBundle:Advert:list_postulates.html.twig", array(
+        return $this->render("AdvertBundle:Admin:list_postulates.html.twig", array(
             'post' => $post,
             'postulates' => $this->getDoctrine()->getRepository(Postulate::class)->findBy(['post' => $post->getId()])
         ));

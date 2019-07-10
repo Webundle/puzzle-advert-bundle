@@ -1,0 +1,74 @@
+{% trans_default_domain 'advert' %}
+
+{{ form_start(form, {'attr': {'id': 'form_validation', 'class': 'uk-form-stacked'}}) }}
+    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+        <div class="uk-width-xLarge-7-10 uk-width-large-7-10">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
+                        <div class="uk-width-large-1-1">
+                            <div class="uk-form-row">
+                                {{ form_label(form.name, 'advert.post.form.name'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                                {{ form_widget(form.name, {'attr' : {'class': 'md-input'}}) }}
+                            </div>
+                            <div class="uk-form-row">
+                                {{ form_widget(form.description, { 'id': 'wysiwyg_ckeditor', 'attr' : { 'class' : 'md-input' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-xLarge-3-10 uk-width-large-3-10">
+        	<div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-form-row">
+                        {{ form_label(form.category, 'advert.post.form.category'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.category, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.advertiser, 'advert.post.form.advertiser'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.advertiser, {'attr': {'data-md-selectize' : true}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.tag, 'advert.post.form.tag'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.tag, {'attr': {'class' : 'md-input'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.email, 'advert.post.form.email'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class' : 'md-input'}}) }}
+                    </div>
+
+                    <div class="uk-form-row">
+                        <div class="uk-float-right">
+                            {{ form_widget(form.pinned, {'attr': {'data-switchery' : true}}) }}
+                        </div>
+                        {{ form_label(form.pinned, 'advert.post.form.pinned'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        <div class="uk-float-right">
+                            {{ form_widget(form.enablePostulate, {'attr': {'data-switchery' : true}}) }}
+                        </div>
+                        {{ form_label(form.enablePostulate, 'advert.post.form.enable_postulate'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                    </div>
+                    <div class="uk-form-row">
+                        {{ form_label(form.expiresAt, 'advert.post.form.expires_at'|trans, {'label_attr': {'class' : 'uk-form-label'}}) }}
+                        {% if post is not defined or post.expiresAt is empty %}
+                            {{ form_widget(form.expiresAt, {'attr': {'class': 'datepicker'}}) }}
+                        {% else %}
+                            {{ form_widget(form.expiresAt, {'attr': {'class': 'datepicker'}, 'value': post.expiresAt|date('d-m-Y H:i') }) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-1-1 uk-text-center uk-margin-top">
+            <a class="md-btn md-btn-default" href="{{ post is defined ? url('puzzle_admin_advert_post_show', {'id': post.id}) : url('puzzle_admin_advert_post_list') }}">
+                {{ 'advert.post.form.cancel'|trans }}
+            </a>
+            <button class="md-btn md-btn-success" type="submit">
+                {{ post is defined ? 'advert.post.form.update'|trans : 'advert.post.form.create'|trans }}
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}

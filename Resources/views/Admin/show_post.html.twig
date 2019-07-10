@@ -1,0 +1,107 @@
+{% trans_default_domain 'advert' %}
+
+{% extends 'AdvertBundle:Admin:layout.html.twig' %}
+
+{% block title %} {{ parent() }} - {{ "advert.post.show.title"|trans|capitalize }} {{ post.name }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href=" {{ url('puzzle_admin_advert_post_list') }} ">
+       {{ 'advert.post.list.title'|trans|capitalize }}
+    </a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "advert.post.show.title"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+     <div id="page_content_inner">
+        <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+            <div class="uk-width-1-2">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.name'|trans }} : </label>
+                            <span>{{ post.name }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.category'|trans }} : </label>
+                            <a href="{{ url('puzzle_admin_advert_category_show', {'id': post.category.id}) }}">{{ post.category.name }}</a>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.advertiser'|trans }} : </label>
+                            <a href="{{ url('puzzle_admin_advert_advertiser_show', {'id': post.advertiser.id}) }}" class="show-modal">{{ post.advertiser.name }}</a>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.pinned'|trans }} : </label>
+                            {% if post.isPinned == 1 %}
+                                <span class="uk-badge uk-badge-success">{{ 'advert.post.list.pinned_yes'|trans }}</span>
+                            {% else %}
+                                <span class="uk-badge">{{ 'advert.post.list.pinned_no'|trans }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.enable_postulate'|trans }} : </label>
+                            {% if post.enablePostulate == 1 %}
+                                <span class="uk-badge uk-badge-success">{{ 'advert.post.list.enable_postulate_yes'|trans }}</span>
+                            {% else %}
+                                <span class="uk-badge">{{ 'advert.post.list.enable_postulate_no'|trans }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.expires_at'|trans }} : </label>
+                            <span>{{ post.expiresAt ? post.expiresAt|date('d-m-Y H:i') : 'advert.post.show.undefined'|trans }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.created_by'|trans }} : </label>
+                            <span>{{ post.createdBy }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.created_at'|trans }} : </label>
+                            <span>{{ date_time_ago(post.createdAt) }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.updated_by'|trans }} : </label>
+                            <span>{{ post.createdBy }}</span>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                            <label class="uk-text-bold">{{ 'advert.post.show.updated_at'|trans }} : </label>
+                            <span>{{ date_time_ago(post.updatedAt) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div>
+                            <span>{{ post.description|raw }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-text-center uk-margin-top">
+                <a href="{{ url('puzzle_admin_advert_post_update', { 'id': post.id })}}" class="md-btn md-btn-primary" id="{{ post.id }}">
+                    <i class="fa fa-pencil"></i>
+                    {{ "advert.post.show.update"|trans }}
+                </a>
+                {% if post.enablePostulate == true %}
+                <a href="{{ url('puzzle_admin_advert_postulate_list', { 'id': post.id })}}" class="md-btn md-btn-default" id="{{ post.id }}">
+                    <i class="fa fa-users"></i>
+                    {{ "advert.post.show.manage_postulate"|trans }}
+                </a>
+                {% endif %}
+                <a href="#" class="remove-item md-btn md-btn-danger" data-route="{{ url('puzzle_admin_advert_post_delete', {'id' : post.id}) }}" data-label="{{ post.name }}" data-title="{{ 'advert.post.delete.title' }}" data-text="{{ 'advert.post.delete.description'|trans({'%postName%': post.name}) }}">
+                    <i class="fa fa-trash-o"></i>
+                    {{ "advert.post.show.delete"|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

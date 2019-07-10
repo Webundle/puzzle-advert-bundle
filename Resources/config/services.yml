@@ -1,4 +1,17 @@
 services:
+    # Listener
+    advert.post_listener:
+        class: Puzzle\AdvertBundle\Listener\PostListener
+        arguments: [ "@doctrine.orm.entity_manager" ]
+        public: false
+        tags:
+            - { name: kernel.event_listener, event: "advert.post.created", method: onCreated }
+    advert.category_listener:
+        class: Puzzle\AdvertBundle\Listener\CategoryListener
+        arguments: [ "@doctrine.orm.entity_manager", "@translator"]
+        tags:
+            - { name: kernel.event_listener, event: "admin.installing", method: onAdminInstalling } 
+                   
     # Twig extension
     advert.twig.extension:
         class: Puzzle\AdvertBundle\Twig\AdvertExtension

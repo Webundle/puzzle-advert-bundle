@@ -47,6 +47,12 @@ class Advertiser
     private $email;
     
     /**
+     * @ORM\Column(name="phone_number", type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $phoneNumber;
+    
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
@@ -93,6 +99,15 @@ class Advertiser
     
     public function getEmail() :?string {
         return $this->email;
+    }
+    
+    public function setPhoneNumber(string $phoneNumber) :self {
+        $this->phoneNumber = $phoneNumber;
+        return $this;
+    }
+    
+    public function getPhoneNumber() :?string {
+        return $this->phoneNumber;
     }
     
     public function setPicture($picture) :self {

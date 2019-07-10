@@ -1,0 +1,32 @@
+{% trans_default_domain 'advert' %}
+
+{% extends 'AdvertBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "advert.advertiser.update.title"|trans|capitalize }} {{ advertiser.name }} {% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href="{{ url('puzzle_admin_advert_advertiser_list') }}">{{ "advert.advertiser.list.title"|trans|capitalize }}</a>
+    <i class="fa fa-chevron-right"></i>
+    <em>{{ "advert.advertiser.update.title"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+    <div id="page_content_inner">
+        {% include 'AdvertBundle:Admin:form_advertiser.html.twig' with {'form': form, 'advertiser': advertiser} %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {% javascripts
+        'bundles/media/js/upload.js'
+        output="compiled/js/puzzle_admin_advert_advertiser_update.min.js"
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+	<script>
+		// Preview picture
+		altair_form_file_upload.preview();
+	</script>
+{% endblock %}

@@ -49,6 +49,12 @@ class Category implements NodeInterface
     private $picture;
     
     /**
+     * @ORM\Column(name="is_default", type="boolean")
+     * @var bool
+     */
+    private $default;
+    
+    /**
      * @var string
      * @ORM\Column(name="materializedPath", type="string", nullable=true)
      */
@@ -136,5 +142,14 @@ class Category implements NodeInterface
     
     public function getPosts() :? Collection {
         return $this->posts;
+    }
+    
+    public function setDefault(bool $default) :self {
+        $this->default = $default;
+        return $this;
+    }
+    
+    public function isDefault() :bool {
+        return $this->default;
     }
 }

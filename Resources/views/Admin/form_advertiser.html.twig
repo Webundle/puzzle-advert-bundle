@@ -1,0 +1,41 @@
+{% trans_default_domain 'advert' %}
+
+<div class="uk-width-medium-6-10 uk-container-center">
+   {{ form_start(form) }}
+		<div class="md-card">
+            <div class="md-card-content">
+                <div class="uk-grid uk-grid-divider uk-grid-medium" data-uk-grid-margin>
+                    <div class="uk-width-large-1-1">
+                        <div class="uk-form-row">
+                            {{ form_label(form.name, 'advert.advertiser.form.name'|trans , {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">
+                            {{ form_label(form.email, 'advert.advertiser.form.email'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">
+                            {{ form_label(form.phoneNumber, 'advert.advertiser.form.phone_number'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.phoneNumber, {'attr': {'class': 'md-input'}}) }}
+                        </div>
+                        <div class="uk-form-row">
+                            {{ form_label(form.description, 'advert.advertiser.form.description'|trans, {'label_attr': {'class': 'uk-form-label'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'md-input', 'required': false}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ render(controller('MediaBundle:Admin:embedFile', {'formData': form.picture, 'data': (advertiser is defined ? advertiser.picture : null), 'type': 'picture', 'context': 'advert/advertiser', 'multiple': false })) }}
+
+        <div class="uk-margin-top uk-text-center">
+            <a href="{{ advertiser is defined ? url('puzzle_admin_advert_advertiser_show', {'id': advertiser.id}) : url('puzzle_admin_advert_advertiser_list') }}" class="md-btn">
+                {{ "advert.advertiser.form.back"|trans }}
+            </a>
+            <button class="md-btn md-btn-success" type="submit">
+                {{ advertiser is defined ? 'advert.advertiser.form.update'|trans : 'advert.advertiser.form.create'|trans }}
+            </button>
+        </div>
+    {{ form_end(form) }}
+</div>

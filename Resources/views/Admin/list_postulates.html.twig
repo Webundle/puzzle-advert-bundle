@@ -1,0 +1,111 @@
+{% trans_default_domain 'advert' %}
+
+{% extends 'AdvertBundle:Admin:layout.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ "advert.post.show.title"|trans|capitalize }} - {{ "advert.post.show.postulates"|trans|capitalize }}{% endblock %}
+
+{% block breadcrumbmodule %}
+    {{ parent() }}
+    <a href="{{ url('puzzle_admin_advert_post_list') }}">{{ "advert.post.list.title"|trans|capitalize }}</a>
+    <i class="fa fa-chevron-right"></i>
+    <a href="{{ url('puzzle_admin_advert_post_show', {'id': post.id }) }}">{{ "advert.post.show.title"|trans|capitalize }}</a>
+    <i class="fa fa-chevron-right"></i>
+	<em>{{ "advert.post.show.postulates"|trans|capitalize }}</em>
+{% endblock %}
+
+{% block content %}
+<div id="page_content_inner">
+    <div class="md-card">
+        <div class="md-card-content">
+            <table id="dt_individual_search" class="uk-table uk-table-hover" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="no-sort">
+                        {% if postulates is not empty %}
+                            <div class="toggle-action uk-hidden">
+                                <select class="delete-list">
+                                    <option value="">{{ 'advert.postulate.list.grouped_actions'|trans }}</option>
+                                    <option value="delete">{{ 'advert.postulate.list.delete'|trans }}</option>
+                                </select>
+                                <input type="hidden" value="{{ postulates|length|default('0') }}" id="toggle-items-count">
+                                <input type="hidden" value="0" id="toggle-items-checked-count">
+                            </div>
+                        {% endif %}
+                    </th>
+                    <th>{{ "advert.postulate.list.user"|trans }}</th>
+                    <th>{{ "advert.postulate.list.post"|trans }}</th>
+                    <th>{{ "advert.postulate.list.created_at"|trans }}</th>
+                    <th>{{ "advert.postulate.list.confirmed"|trans }}</th>
+                    <th>{{ "advert.postulate.list.confirmed_at"|trans }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for postulate in postulates %}
+                        <tr class="toggleable" id="item-{{ postulate.id }}">
+                            <td>
+                                <a class="uk-text-muted uk-text-small uk-text-left toggleable-btn-select" href="#">
+                                    <i class="material-icons md-24 toggle-icon toggle-item" id="toggle-item-{{ postulate.id }}">&#xE835;</i>
+                                </a>
+                            </td>
+                            <td>{{ postulate.user }}</td>
+                            <td>{{ postulate.post.name }}</td>
+                            <td><small>{{ postulate.createdAt|date('d-m-y H:i')|default('-') }}</small></td>
+                            <td><small>{{ postulate.confirmedAt|date('d-m-y H:i')|default('-') }}</small></td>
+                            <td class="uk-text-center"><input type="checkbox" value="{{ postulate.confirmed|default(0) }}" disabled=""></td>
+                            <td class="uk-text-right">
+                                <div class="uk-button-dropdown" data-uk-dropdown="{pos:'bottom-right'}">
+                                    <a><i class="fa fa-align-justify"></i></a>
+                                    <div class="uk-dropdown uk-dropdown-small uk-dropdown-bottom uk-text-left" aria-hidden="true">
+                                        <ul class="uk-nav uk-nav-dropdown">
+                                            <li>
+                                                <a href="{{ url('admin_advert_postulate_confirm', {'id': postulate.id}) }}">
+                                                    <i class="fa fa-pencil"></i>
+                                                    {{ "advert.postulate.list.confirm"|trans }}
+                                                </a>
+                                            </li>
+                                            {% if postulate.file is not empty %}
+                                                <li>
+                                                    <a href="{{ postulate.file }}" target="blank">
+                                                        <i class="fa fa-file-text"></i>
+                                                        {{ "advert.postulate.list.file"|trans }}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            <li>
+                                                <a href="#" data-route="{{ url('admin_advert_postulate_delete', {'id': postulate.id}) }}" data-text="{{ 'advert.postulate.delete.title'|trans({'%postulateUser%': postulate.user}) }}" data-label="{{ postulate.user }}" class="remove-item">
+                                                    <i class="fa fa-trash-o uk-text-danger"></i>
+                                                    {{ "advert.postulate.list.delete"|trans }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$('body').on('change', '.grouped-actions', function(e){
+			e.preventDefault();
+			switch($(this).val()){
+				case 'delete':
+					var modalId = 'delete-list-modal';
+
+					UIkit.modal("#" + modalId).show();
+                    console.log($('#' + modalId).find('#delete-list-btn'));
+					$('#' + modalId).find('#delete-list-btn').attr('data-delete-item-route', 'puzzle_admin_advert_postulate_delete');
+				default:
+					break;
+			}
+		});
+	</script>
+{% endblock %}

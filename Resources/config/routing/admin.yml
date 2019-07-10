@@ -8,7 +8,7 @@ puzzle_admin_advert_category_create:
     defaults: { _controller: 'AdvertBundle:Admin:createCategory' }
 
 puzzle_admin_advert_category_show:
-    path:     /category/{id}
+    path:     /category/{id}/show
     defaults: { _controller: 'AdvertBundle:Admin:showCategory' }
 
 puzzle_admin_advert_category_update:
@@ -29,7 +29,7 @@ puzzle_admin_advert_advertiser_create:
     defaults: { _controller: 'AdvertBundle:Admin:createAdvertiser' }
 
 puzzle_admin_advert_advertiser_show:
-    path:     /advertiser/{id}
+    path:     /advertiser/{id}/show
     defaults: { _controller: 'AdvertBundle:Admin:showAdvertiser' }
 
 puzzle_admin_advert_advertiser_update:
@@ -50,7 +50,7 @@ puzzle_admin_advert_post_create:
     defaults: { _controller: 'AdvertBundle:Admin:createPost' }
 
 puzzle_admin_advert_post_show:
-    path:     /post/{id}
+    path:     /post/{id}/show
     defaults: { _controller: 'AdvertBundle:Admin:showPost' }
 
 puzzle_admin_advert_post_update:

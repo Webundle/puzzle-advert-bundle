@@ -17,11 +17,11 @@ class AbstractAdvertiserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options){
         parent::buildForm($builder, $options);
-        $builder
-            ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('email', TextType::class)
-            ->add('picture', HiddenType::class, array('mapped' => false))
+        $builder->add('name', TextType::class)
+                ->add('description', TextareaType::class, ['required' => false])
+                ->add('email', TextType::class, ['required' => false])
+                ->add('phoneNumber', TextType::class, ['required' => false])
+                ->add('picture', HiddenType::class, ['mapped' => false, 'required' => false])
         ;
     }
     
